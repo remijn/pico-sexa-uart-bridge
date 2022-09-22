@@ -1,0 +1,49 @@
+name: Release
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'New tag to create'
+        required: true 
+        type: string
+jobs:
+  Release:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: 'Check out code'
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Create Tag
+        uses: rickstaa/action-create-tag@v1
+        with:
+          tag: "${{ inputs.tag }}"
+          message: ""            
+      - name: Create Release
+        uses: fregante/release-with-changelog@v3
+        id: create_release
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: 'Install dependencies'
+        run: |
+          sudo apt-get install cmake gcc-arm-none-eabi libnewlib-arm-none-eabi
+      - name: 'Update Submodules'
+        run: |
+          git submodule sync --recursive
+          git submodule update --init --recursive
+      - name: 'Configure'
+        run: |
+          mkdir -p build
+          cmake -B build
+      - name: 'Build'
+        run: |
+          make -C build
+      - name: Upload uf2
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_name: pico-sexa-uart-bridge-${{ inputs.tag }}.uf2
+          asset_path: build/uart_bridge.uf2
+          asset_content_type: application/octet-stream
