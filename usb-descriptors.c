@@ -26,7 +26,7 @@
 #define USBD_ITF_CDC_2 4
 #define USBD_ITF_CDC_3 6
 #define USBD_ITF_CDC_4 8
-//#define USBD_ITF_MAX 10
+// #define USBD_ITF_MAX 10
 #define USBD_ITF_CDC_5 10
 #define USBD_ITF_MAX 12
 
@@ -44,16 +44,12 @@
 #define USBD_CDC_4_EP_OUT 0x09
 #define USBD_CDC_5_EP_OUT 0x0B
 
-
-
 #define USBD_CDC_0_EP_IN 0x82
 #define USBD_CDC_1_EP_IN 0x84
 #define USBD_CDC_2_EP_IN 0x86
 #define USBD_CDC_3_EP_IN 0x88
 #define USBD_CDC_4_EP_IN 0x8E // 8D works at 9600, 8E seems to work best
-#define USBD_CDC_5_EP_IN 0x8C 
-
-
+#define USBD_CDC_5_EP_IN 0x8C
 
 #define USBD_CDC_CMD_MAX_SIZE 8
 #define USBD_CDC_IN_OUT_MAX_SIZE 64
@@ -83,32 +79,31 @@ static const tusb_desc_device_t usbd_desc_device = {
 
 static const uint8_t usbd_desc_cfg[USBD_DESC_LEN] = {
 	TUD_CONFIG_DESCRIPTOR(1, USBD_ITF_MAX, USBD_STR_0, USBD_DESC_LEN,
-		TUSB_DESC_CONFIG_ATT_REMOTE_WAKEUP, USBD_MAX_POWER_MA),
+						  TUSB_DESC_CONFIG_ATT_REMOTE_WAKEUP, USBD_MAX_POWER_MA),
 
 	TUD_CDC_DESCRIPTOR(USBD_ITF_CDC_0, USBD_STR_CDC, USBD_CDC_0_EP_CMD,
-		USBD_CDC_CMD_MAX_SIZE, USBD_CDC_0_EP_OUT, USBD_CDC_0_EP_IN,
-		USBD_CDC_IN_OUT_MAX_SIZE),
+					   USBD_CDC_CMD_MAX_SIZE, USBD_CDC_0_EP_OUT, USBD_CDC_0_EP_IN,
+					   USBD_CDC_IN_OUT_MAX_SIZE),
 
 	TUD_CDC_DESCRIPTOR(USBD_ITF_CDC_1, USBD_STR_CDC, USBD_CDC_1_EP_CMD,
-		USBD_CDC_CMD_MAX_SIZE, USBD_CDC_1_EP_OUT, USBD_CDC_1_EP_IN,
-		USBD_CDC_IN_OUT_MAX_SIZE),
+					   USBD_CDC_CMD_MAX_SIZE, USBD_CDC_1_EP_OUT, USBD_CDC_1_EP_IN,
+					   USBD_CDC_IN_OUT_MAX_SIZE),
 
 	TUD_CDC_DESCRIPTOR(USBD_ITF_CDC_2, USBD_STR_CDC, USBD_CDC_2_EP_CMD,
-		USBD_CDC_CMD_MAX_SIZE, USBD_CDC_2_EP_OUT, USBD_CDC_2_EP_IN,
-		USBD_CDC_IN_OUT_MAX_SIZE),
+					   USBD_CDC_CMD_MAX_SIZE, USBD_CDC_2_EP_OUT, USBD_CDC_2_EP_IN,
+					   USBD_CDC_IN_OUT_MAX_SIZE),
 
 	TUD_CDC_DESCRIPTOR(USBD_ITF_CDC_3, USBD_STR_CDC, USBD_CDC_3_EP_CMD,
-		USBD_CDC_CMD_MAX_SIZE, USBD_CDC_3_EP_OUT, USBD_CDC_3_EP_IN,
-		USBD_CDC_IN_OUT_MAX_SIZE),
+					   USBD_CDC_CMD_MAX_SIZE, USBD_CDC_3_EP_OUT, USBD_CDC_3_EP_IN,
+					   USBD_CDC_IN_OUT_MAX_SIZE),
 
 	TUD_CDC_DESCRIPTOR(USBD_ITF_CDC_4, USBD_STR_CDC, USBD_CDC_4_EP_CMD,
-		USBD_CDC_CMD_MAX_SIZE, USBD_CDC_4_EP_OUT, USBD_CDC_4_EP_IN,
-		USBD_CDC_IN_OUT_MAX_SIZE),
+					   USBD_CDC_CMD_MAX_SIZE, USBD_CDC_4_EP_OUT, USBD_CDC_4_EP_IN,
+					   USBD_CDC_IN_OUT_MAX_SIZE),
 
 	TUD_CDC_DESCRIPTOR(USBD_ITF_CDC_5, USBD_STR_CDC, USBD_CDC_5_EP_CMD,
-		USBD_CDC_CMD_MAX_SIZE, USBD_CDC_5_EP_OUT, USBD_CDC_5_EP_IN,
-		USBD_CDC_IN_OUT_MAX_SIZE),
-
+					   USBD_CDC_CMD_MAX_SIZE, USBD_CDC_5_EP_OUT, USBD_CDC_5_EP_IN,
+					   USBD_CDC_IN_OUT_MAX_SIZE),
 
 };
 
@@ -123,7 +118,7 @@ static char *const usbd_desc_str[] = {
 
 const uint8_t *tud_descriptor_device_cb(void)
 {
-	return (const uint8_t *) &usbd_desc_device;
+	return (const uint8_t *)&usbd_desc_device;
 }
 
 const uint8_t *tud_descriptor_configuration_cb(uint8_t index)
@@ -136,10 +131,13 @@ const uint16_t *tud_descriptor_string_cb(uint8_t index, uint16_t langid)
 	static uint16_t desc_str[DESC_STR_MAX];
 	uint8_t len;
 
-	if (index == 0) {
+	if (index == 0)
+	{
 		desc_str[1] = 0x0409;
 		len = 1;
-	} else {
+	}
+	else
+	{
 		const char *str;
 
 		if (index >= sizeof(usbd_desc_str) / sizeof(usbd_desc_str[0]))
