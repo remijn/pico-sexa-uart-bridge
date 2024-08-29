@@ -1,2 +1,4 @@
 .vscode
 build
+pico-sdk
+scripts/node_modules/*

@@ -29,6 +29,7 @@
 // #define USBD_ITF_MAX 10
 #define USBD_ITF_CDC_5 10
 #define USBD_ITF_MAX 12
+// #define USBD_ITF_MAX 6
 
 #define USBD_CDC_0_EP_CMD 0x81
 #define USBD_CDC_1_EP_CMD 0x83
@@ -110,8 +111,8 @@ static const uint8_t usbd_desc_cfg[USBD_DESC_LEN] = {
 char serial[17];
 
 static char *const usbd_desc_str[] = {
-	[USBD_STR_MANUF] = "Raspberry Pi",
-	[USBD_STR_PRODUCT] = "Pico",
+	[USBD_STR_MANUF] = "RemijnPi",
+	[USBD_STR_PRODUCT] = "Eink Driver",
 	[USBD_STR_SERIAL] = serial,
 	[USBD_STR_CDC] = "Board CDC",
 };

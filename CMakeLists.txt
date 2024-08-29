@@ -26,4 +26,6 @@ target_link_libraries(uart_bridge
 	tinyusb_device
         hardware_pio)
 
+# pico_enable_stdio_uart(uart_bridge 1)
+
 pico_add_extra_outputs(uart_bridge)
